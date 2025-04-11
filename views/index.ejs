@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Express Server</title>
-  </head>
-  <body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css"> 
+</head>
+<body>
+  <header>
     <h1>Welcome to <%= title %></h1>
-  </body>
+  </header>
+
+  <main>
+    <p>This is the homepage for managing Employees, Departments, and Roles.</p>
+
+    <nav>
+      <ul>
+        <li><a href="/employees">Employees</a></li>
+        <li><a href="/departments">Departments</a></li>
+        <li><a href="/roles">Roles</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Chahinez Company. All rights reserved.</p>
+  </footer>
+</body>
 </html>
