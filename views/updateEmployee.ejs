@@ -11,9 +11,8 @@
     <h1>Update Employee</h1>
   </header>
   <main class="main-content">
-    <form action="/employees/<%= employee.id %>" method="POST">
-      <input type="hidden" name="_method" value="PUT"> <!-- Simulates a PUT request -->
-
+    <form action="/employees/<%= employee.id %>?_method=PUT" method="POST">
+      
       <label for="id">ID:</label>
       <input type="text" name="id" id="id" value="<%= employee.id %>" readonly />
 

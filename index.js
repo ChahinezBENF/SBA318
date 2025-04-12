@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const methodOverride = require('method-override');
+
 
 const app = express();
 const port = 3000;
+
+const methodOverride = require('method-override');
 
 //import routes
 const employeeRoutes = require('./routes/employees');

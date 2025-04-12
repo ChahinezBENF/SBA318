@@ -45,15 +45,6 @@ router.get('/add', (req, res) => {
   res.render('addEmployee'); // Render the Add Employee form
 });
 
-// Get a specific employee by ID
-router.get('/:id', (req, res) => {
-  const employee = employees.find(emp => emp && emp.id == req.params.id);
-  if (employee) {
-    res.json(employee);
-  } else {
-    res.status(404).send('Employee not found');
-  }
-});
 
 // Add a new employee
 router.post('/', (req, res) => {
@@ -76,27 +67,6 @@ router.post('/', (req, res) => {
 
 
 
-
-// Update an employee
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const updatedEmployee = req.body;
-
-  if (!updatedEmployee || !updatedEmployee.firstName || !updatedEmployee.lastName) {
-    return res.status(400).send('Invalid data received: Employee must have a first name and last name.');
-  }
-
-  const index = employees.findIndex(emp => emp.id == id);
-  if (index !== -1) {
-    employees[index] = { ...employees[index], ...updatedEmployee }; // Merge old and new data
-
-    fs.writeFileSync(filePath, `module.exports = ${JSON.stringify(employees, null, 2)};`);
-    res.redirect('/employees/view'); // Redirect to the main employees page after updating
-  } else {
-    res.status(404).send('Employee not found.');
-  }
-});
-
 //Update employes 
 router.get('/update/:id', (req, res) => {
   const employee = employees.find(emp => emp.id == req.params.id);
@@ -106,6 +76,30 @@ router.get('/update/:id', (req, res) => {
     res.status(404).send('Employee not found.');
   }
 });
+
+
+
+// Update an employee
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+
+  const updatedEmployee = req.body;
+
+  if (!updatedEmployee || !updatedEmployee.firstName || !updatedEmployee.lastName) {
+    return res.status(400).send('Invalid data received: Employee must have a first name and last name.');
+  }
+
+  const index = employees.findIndex(emp => emp.id == id);
+  if (index !== -1) {
+    employees[index] = { ...employees[index], ...updatedEmployee };
+    fs.writeFileSync(filePath, `module.exports = ${JSON.stringify(employees, null, 2)};`);
+    res.redirect('/employees/view');
+  } else {
+    res.status(404).send('Employee not found.');
+  }
+});
+
+
 
 // Delete an employee
 router.delete('/:id', (req, res) => {
@@ -118,6 +112,17 @@ router.delete('/:id', (req, res) => {
     res.redirect('/employees/view'); // Redirect to the main employees page after deletion
   } else {
     res.status(404).send('Employee not found.');
+  }
+});
+
+
+// Get a specific employee by ID
+router.get('/:id', (req, res) => {
+  const employee = employees.find(emp => emp && emp.id == req.params.id);
+  if (employee) {
+    res.json(employee);
+  } else {
+    res.status(404).send('Employee not found');
   }
 });
 

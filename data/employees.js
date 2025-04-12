@@ -1,12 +1,12 @@
 module.exports = [
   {
-    "id": 1,
+    "id": "1",
     "firstName": "Chahinez",
     "lastName": "Benfriha",
-    "role": "Lead Engineer",
-    "department": "IT",
-    "salary": 85000,
-    "hireDate": "2020-03-15"
+    "role": "Developer",
+    "department": "Engineering",
+    "salary": "70000",
+    "hireDate": "2025-01-01"
   },
   {
     "id": 2,
@@ -25,5 +25,14 @@ module.exports = [
     "department": "Marketing",
     "salary": 54000,
     "hireDate": "2022-01-20"
+  },
+  {
+    "id": "6",
+    "firstName": "mohamed",
+    "lastName": "sahli",
+    "role": "Lead Engineer",
+    "department": "IT",
+    "salary": "300000",
+    "hireDate": "1988-04-25"
   }
 ];
