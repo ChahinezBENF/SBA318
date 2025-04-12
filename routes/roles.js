@@ -16,6 +16,23 @@ router.get('/', (req, res) => {
   res.json(roles);
 });
 
+router.get('/view', (req, res) => {
+  res.render('roles', { roles });
+});
+
+router.get('/search', (req, res) => {
+  const query = req.query.q ? req.query.q.toLowerCase() : ''; 
+
+  const filteredRoles = query
+    ? roles.filter(role =>
+        role.title.toLowerCase().includes(query) ||
+        String(role.id).toLowerCase().includes(query)
+      )
+    : roles;
+
+  res.render('roles', { roles: filteredRoles });
+});
+
 // Get a specific role by ID
 router.get('/:id', (req, res) => {
   const role = roles.find(role => role.id == req.params.id);

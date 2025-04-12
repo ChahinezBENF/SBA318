@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Employee</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Update Employee</h1>
+  </header>
+  <main class="main-content">
+    <form action="/employees/<%= employee.id %>" method="POST">
+      <input type="hidden" name="_method" value="PUT"> <!-- Simulates a PUT request -->
+
+      <label for="id">ID:</label>
+      <input type="text" name="id" id="id" value="<%= employee.id %>" readonly />
+
+      <label for="firstName">First Name:</label>
+      <input type="text" name="firstName" id="firstName" value="<%= employee.firstName %>" required />
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" name="lastName" id="lastName" value="<%= employee.lastName %>" required />
+
+      <label for="role">Role:</label>
+      <input type="text" name="role" id="role" value="<%= employee.role %>" required />
+
+      <label for="department">Department:</label>
+      <input type="text" name="department" id="department" value="<%= employee.department %>" required />
+
+      <label for="salary">Salary:</label>
+      <input type="number" name="salary" id="salary" value="<%= employee.salary %>" required />
+
+      <label for="hireDate">Hire Date:</label>
+      <input type="date" name="hireDate" id="hireDate" value="<%= employee.hireDate %>" required />
+
+      <button type="submit">Update Employee</button>
+    </form>
+  </main>
+  <footer class="footer">
+    <p>&copy; 2025 Chahinez Company. All rights reserved.</p>
+  </footer>
+</body>
+</html>

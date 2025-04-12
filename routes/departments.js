@@ -17,6 +17,21 @@ router.get('/', (req, res) => {
   res.json(departments);
 });
 
+router.get('/view', (req, res) => {
+  res.render('departments', { departments });
+});
+
+router.get('/search', (req, res) => {
+  const query = req.query.q ? req.query.q.toLowerCase() : ''; // Get the query parameter
+
+  const filteredDepartments = departments.filter(department =>
+    department.name.toLowerCase().includes(query) ||
+    String(department.id).toLowerCase().includes(query) // Search by name or ID
+  );
+
+  res.render('departments', { departments: filteredDepartments });
+});
+
 // Get a specific department by ID
 router.get('/:id', (req, res) => {
   const department = departments.find(dep => dep.id == req.params.id);

@@ -16,6 +16,35 @@ router.get('/', (req, res) => {
   res.json(employees);
 });
 
+// Render the employees page with dynamic data
+router.get('/view', (req, res) => {
+  
+  res.render('employees', { employees });
+});
+
+
+//Manage search 
+router.get('/search', (req, res) => {
+  const query = req.query.q ? req.query.q.toLowerCase() : ''; 
+
+  const filteredEmployees = query
+    ? employees.filter(employee =>
+        employee.firstName.toLowerCase().includes(query) ||
+        employee.lastName.toLowerCase().includes(query) ||
+        employee.role.toLowerCase().includes(query) ||
+        employee.department.toLowerCase().includes(query) ||
+        String(employee.id).toLowerCase().includes(query)
+      )
+    : employees; 
+
+  res.render('employees', { employees: filteredEmployees });
+});
+
+// Render the Add Employee form
+router.get('/add', (req, res) => {
+  res.render('addEmployee'); // Render the Add Employee form
+});
+
 // Get a specific employee by ID
 router.get('/:id', (req, res) => {
   const employee = employees.find(emp => emp && emp.id == req.params.id);
@@ -28,71 +57,70 @@ router.get('/:id', (req, res) => {
 
 // Add a new employee
 router.post('/', (req, res) => {
+  
   const newEmployee = req.body;
 
-  // Validate incoming data
   if (!newEmployee || Object.keys(newEmployee).length === 0) {
-    return res.status(400).send('Invalid data received');
+    return res.status(400).send('Invalid data received.');
   }
 
-  // Check for duplicate ID
   if (employees.some(emp => emp.id == newEmployee.id)) {
     return res.status(400).send('Employee ID must be unique.');
   }
 
-
   employees.push(newEmployee);
 
-  fs.writeFileSync(filePath,`module.exports = ${JSON.stringify(employees, null, 2)};`);
-
-  res.status(201).json(newEmployee);
+  fs.writeFileSync(filePath, `module.exports = ${JSON.stringify(employees, null, 2)};`);
+  res.redirect('/employees/view'); // Redirect to the main employees page after adding
 });
+
+
+
 
 // Update an employee
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const updatedEmployee = req.body;
 
-   // Validate incoming data
-   if (!updatedEmployee || !updatedEmployee.firstName || !updatedEmployee.lastName) {
+  if (!updatedEmployee || !updatedEmployee.firstName || !updatedEmployee.lastName) {
     return res.status(400).send('Invalid data received: Employee must have a first name and last name.');
   }
 
-  const index = employees.findIndex(emp => emp && emp.id == id);
+  const index = employees.findIndex(emp => emp.id == id);
   if (index !== -1) {
+    employees[index] = { ...employees[index], ...updatedEmployee }; // Merge old and new data
 
-       // Ensure the updated ID doesn't conflict with other existing IDs
-       if (employees.some(emp => emp.id == updatedEmployee.id && emp.id != id)) {
-        return res.status(400).send('Employee ID must be unique.');
-      }
-
-    employees[index] = updatedEmployee;
-
-   // Write the updated data to the file
-    fs.writeFileSync( filePath, `module.exports = ${JSON.stringify(employees, null, 2)};` );
-
-    res.json(updatedEmployee);
+    fs.writeFileSync(filePath, `module.exports = ${JSON.stringify(employees, null, 2)};`);
+    res.redirect('/employees/view'); // Redirect to the main employees page after updating
   } else {
-    res.status(404).send('Employee not found');
+    res.status(404).send('Employee not found.');
+  }
+});
+
+//Update employes 
+router.get('/update/:id', (req, res) => {
+  const employee = employees.find(emp => emp.id == req.params.id);
+  if (employee) {
+    res.render('updateEmployee', { employee }); // Prefills the form with the selected employee's data
+  } else {
+    res.status(404).send('Employee not found.');
   }
 });
 
 // Delete an employee
 router.delete('/:id', (req, res) => {
-  const index = employees.findIndex(emp => emp && emp.id == req.params.id); // Check if the employee exists and is not nul
+
+  const index = employees.findIndex(emp => emp.id == req.params.id);
   if (index !== -1) {
     employees.splice(index, 1);
-    
-     // Filter out null values to clean the array
-     const filteredEmployees = employees.filter(emp => emp !== null);
 
-      // Write the cleaned data back to the file
-    fs.writeFileSync(  filePath, `module.exports = ${JSON.stringify(filteredEmployees, null, 2)};` );
-    
-    res.status(204).send();
+    fs.writeFileSync(filePath, `module.exports = ${JSON.stringify(employees, null, 2)};`);
+    res.redirect('/employees/view'); // Redirect to the main employees page after deletion
   } else {
-    res.status(404).send('Employee not found');
+    res.status(404).send('Employee not found.');
   }
 });
+
+
 
 module.exports = router;
