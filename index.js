@@ -32,9 +32,21 @@ app.use('/roles', roleRoutes);
 //Set up the View Engine ejs
 app.set('view engine', 'ejs');
 
+// Custom Middleware 1
+app.use((req, res, next) => {
+  console.log(`[LOG] ${req.method} request to ${req.url}`);
+  next();
+});
+
+// Custom Middleware 2 
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 // Render homepage
 app.get('/', (req, res) => {
+   console.log(`Request received at: ${req.requestTime}`);
     res.render('index', { title: 'CHAHINEZ Managment' });
   });
   
@@ -42,6 +54,12 @@ app.get('/', (req, res) => {
 // 404 Middleware
 app.use((req, res) => {
   res.status(404).send('Resource Not Found');
+});
+
+//Error-handling middleware
+app.use((err, req, res, next) => {
+  console.error('[ERROR]', err.stack);
+  res.status(500).send(' Please try again later ');
 });
 
 app.listen(port, () => {

@@ -5,7 +5,7 @@ module.exports = [
     "lastName": "Benfriha",
     "role": "Developer",
     "department": "Engineering",
-    "salary": "70000",
+    "salary": "80000",
     "hireDate": "2025-01-01"
   },
   {
@@ -27,12 +27,12 @@ module.exports = [
     "hireDate": "2022-01-20"
   },
   {
-    "id": "6",
-    "firstName": "mohamed",
+    "id": "4",
+    "firstName": "mohamed abdelkader",
     "lastName": "sahli",
-    "role": "Lead Engineer",
-    "department": "IT",
-    "salary": "300000",
-    "hireDate": "1988-04-25"
+    "role": "Structural Engineer",
+    "department": "CIVIL",
+    "salary": "49900",
+    "hireDate": "1988-10-23"
   }
 ];

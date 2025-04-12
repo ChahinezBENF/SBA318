@@ -118,11 +118,15 @@ router.delete('/:id', (req, res) => {
 
 // Get a specific employee by ID
 router.get('/:id', (req, res) => {
-  const employee = employees.find(emp => emp && emp.id == req.params.id);
-  if (employee) {
-    res.json(employee);
-  } else {
-    res.status(404).send('Employee not found');
+  try {
+    const employee = employees.find(emp => emp && emp.id == req.params.id);
+    if (employee) {
+      res.json(employee);
+    } else {
+      throw new Error('Employee not found!');
+    }
+  } catch (err) {
+    next(err); // Pass the error to error-handling middleware
   }
 });
 
