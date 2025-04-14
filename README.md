@@ -154,3 +154,35 @@ if (!/^[a-zA-Z]+$/.test(name)) {
   - `body-parser` 
 
 ---
+
+## 🚀 Future Enhancements
+
+Planned improvements to scale and enhance the CHAHINEZ Employee Management System:
+
+### 🔐 Authentication & Authorization
+- [ ] Implement user login/logout functionality
+- [ ] Define user access levels (Admin, HR, Employee)
+- [ ] Restrict route access based on role permissions
+
+### 🗃️ Switch to Database Storage
+- [ ] Replace file-based storage with a real database like MongoDB 
+- [ ] Normalize the schema into relational tables for employees, departments, and roles
+- [ ] Use data modeling 
+
+### 📊 Dashboard & Analytics
+- [ ] Create a visual dashboard showing:
+  - [ ] Total employees
+  - [ ] Average salary
+  - [ ] Number of employees per department
+- [ ] Integrate interactive graphs 
+- [ ] Add filters to view analytics by department, role, or date
+
+### ✅ Form Validation & Format Requirements
+- [ ] **Date of Birth (DOB)**
+  - [ ] Cannot be in the future
+  - [ ] Employee must be at least 16 years old
+- [ ] **Hire Date**
+  - [ ] Cannot precede the DOB
+  - [ ] Cannot be in the future
+- [ ] **Department & Role**
+  - [ ] Use dropdowns populated from the database
