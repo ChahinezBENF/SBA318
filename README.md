@@ -91,4 +91,66 @@ A simple Node.js/Express web application to manage employees, departments, and r
 - **6. POST routes for data creation:**
   - `POST /employees` – Allows adding new employees via form submission.
 
+- **7. PUT route for data updates:**
+  - `PUT /employees/:id` – Updates employee data using a form and method override:
+    ```js
+    <form action="/employees/<%= employee.id %>?_method=PUT" method="POST">
+    ```
+
+- **8. DELETE route for data removal:**
+  - `DELETE /employees/:id` – Deletes employee data using a form and method override:
+    ```js
+    <form action="/employees/<%= employee.id %>?_method=DELETE" method="POST">
+    ```
+
+- **9. Query parameters for filtering:**
+  - `GET /employees/search?q=Developer` – Searches employees by first name, last name, role, or department using query parameters.
+
+- **10. Route parameters used for dynamic operations:**
+  - `/employees/:id` – View employee details  
+  - `/employees/update/:id` – Load update form  
+  - `/employees/:id` (PUT or DELETE) – Update or delete an employee
+
+- **11. RESTful principles followed:**
+  - Routes and HTTP methods align with REST standards (e.g., `GET`, `POST`, `PUT`, `DELETE` for standard CRUD).
+
+- **12. Server-rendered views using EJS template engine:**
+  - Dynamic data rendered in views like:
+    - `employees.ejs`, `addEmployee.ejs`, `updateEmployee.ejs`
+    - `roles.ejs`, `departments.ejs`, `index.ejs`
+
+13. Static CSS Styling
+CSS is served via Express static middleware
+
+Stylesheets are in public/css/ and linked in views:
+   ```js
+   <link rel="stylesheet" href="/css/styles.css">
+   ```
+14. Interactive Forms in Views
+addEmployee.ejs and updateEmployee.ejs contain forms that POST and PUT data to the API
+
+15. Reasonable Code Organization ✅ 
+
+16. Program Stability ✅ 
+
+17. Git Commit Practices
+Project includes frequent commit (over 6)
+
+18. README File ✅ 
+
+19. Level of Effort & Creativity ✅ 
+
+---
+
+## ✅ Bonus Objectives
+1. Include a practical usage of regular expressions within route paths
+```js
+if (!/^[a-zA-Z]+$/.test(name)) {
+  return res.status(400).send('Invalid name format. Only alphabetic characters are allowed.');
+}
+```
+2. Use at least one third-party Node package for practical, sensible purposes: 
+  - `method-override` 
+  - `body-parser` 
+
 ---

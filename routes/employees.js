@@ -40,6 +40,24 @@ router.get('/search', (req, res) => {
   res.render('employees', { employees: filteredEmployees });
 });
 
+// Regex route only allows alphabetic names
+router.get('/search/:name', (req, res) => {
+  const name = req.params.name;
+
+  // Validate with regex inside the handler
+  if (!/^[a-zA-Z]+$/.test(name)) {
+    return res.status(400).send('Invalid name format. Only alphabetic characters are allowed.');
+  }
+
+  const filtered = employees.filter(emp =>
+    emp.firstName.toLowerCase() === name.toLowerCase() ||
+    emp.lastName.toLowerCase() === name.toLowerCase()
+  );
+
+  res.json(filtered);
+});
+
+
 // Render the Add Employee form
 router.get('/add', (req, res) => {
   res.render('addEmployee'); // Render the Add Employee form
